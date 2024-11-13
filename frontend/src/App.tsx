@@ -9,9 +9,9 @@ import { Controller, Events } from "@/controller/controller.ts"; // Import Contr
 
 function App() {
     const [events, setEvents] = useState<Events[]>([]); // State for events
-    const [filteredEvents, setFilteredEvents] = useState<Events[]>([]); // State for filtered events
-    const [selectedDates, setSelectedDates] = useState<Date[]>([]); // State for selected dates
-    const [searchQuery, setSearchQuery] = useState<string>(""); // State for search query
+    const [filteredEvents, setFilteredEvents] = useState<Events[]>([]);
+    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     const controller = new Controller();
 
@@ -35,14 +35,14 @@ function App() {
     }, [events]);
 
     useEffect(() => {
-        // Filter events based on search query
+
         if (searchQuery) {
             const filtered = events.filter((event) =>
                 event.title.toLowerCase().includes(searchQuery.toLowerCase())
             );
             setFilteredEvents(filtered);
         } else {
-            setFilteredEvents(events); // If search query is empty, show all events
+            setFilteredEvents(events);
         }
     }, [searchQuery, events]);
 
@@ -100,7 +100,7 @@ function App() {
                         style={{ width: "300px", height: "350px" }}
                         mode="multiple"
                         selected={selectedDates}
-                        onSelect={(_date) => {}} // You can implement date selection logic if needed
+                        onSelect={(_date) => {}}
                     />
                     <CustomDialog
                         props={{
@@ -110,7 +110,7 @@ function App() {
                             onSave: handleSaveEvent,
                         }}
                         data={{
-                            isEdit: false, // No event is being edited, it's a new event
+                            isEdit: false,
                             event: { date: new Date(), title: "", description: "", id: '' },
                         }}
                     />

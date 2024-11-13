@@ -8,14 +8,14 @@ export type Events = {
 }
 
 export class Controller {
-    private uri: string = 'http://localhost:3000/v1/api';  // Ensure http/https is specified for the base URL
+    private uri: string = 'http://localhost:3000/v1/api';
 
-    // Get a specific event by ID
+
     async getEvent(id: string) {
         try {
             const res = await axios.get<Events>(`${this.uri}/event/${id}`);
             console.log(res.data);
-            return res.data;  // Return the Event data if successful
+            return res.data;
         } catch (error) {
             console.error('Error getting event:', error);
             throw error;
@@ -27,7 +27,7 @@ export class Controller {
         try {
             const res = await axios.get<Events[]>(`${this.uri}/events`);
             console.log(res.data);
-            return res.data;  // Return an array of Events if successful
+            return res.data;
         } catch (error) {
             console.error('Error getting all events:', error);
             throw error;
@@ -39,7 +39,7 @@ export class Controller {
         try {
             const res = await axios.post<Events[]>(`${this.uri}/event`, event);
             console.log(res.data as Events[]);
-            return res.data as Events[];  // Return the saved Event data if successful
+            return res.data as Events[];
         } catch (error) {
             console.error('Error saving event:', error);
             throw error;
@@ -51,7 +51,7 @@ export class Controller {
         try {
             const res = await axios.put<Events[]>(`${this.uri}/event`, event);
             console.log(res.data);
-            return res.data as Events[];  // Return the updated Event data if successful
+            return res.data as Events[];
         } catch (error) {
             console.error('Error updating event:', error);
             throw error;
@@ -63,7 +63,7 @@ export class Controller {
         try {
             const res = await axios.delete<Events[]>(`${this.uri}/event/${event.id}`);
             console.log(res.data);
-            return res.data as Events[];  // Return the response from deletion if successful
+            return res.data as Events[];
         } catch (error) {
             console.error('Error deleting event:', error);
             throw error;

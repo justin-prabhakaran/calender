@@ -27,7 +27,6 @@ export function CustomDialog({ props, data }: { props: CustomDialogProps; data: 
     const [title, setTitle] = React.useState<string>(data.isEdit ? data.event.title : "");
     const [description, setDesc] = React.useState<string>(data.isEdit ? data.event.description : "");
 
-    // If editing, useEffect to populate form with data
     useEffect(() => {
         if (data.isEdit) {
             setDate(data.event.date);
