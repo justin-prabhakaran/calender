@@ -1,3 +1,6 @@
-type Events{
-
+export type Events = {
+    id : number;
+    title : string;
+    description : string;
+    date : Date;
 }
