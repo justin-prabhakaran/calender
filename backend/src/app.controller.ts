@@ -8,7 +8,7 @@ export class AppController {
 
   // Get a specific event by ID
   @Get('event/:id')
-  getEvent(@Param('id') id: number): Events {
+  getEvent(@Param('id') id: string): Events {
     return this.appService.getEvent(id);
   }
 
@@ -26,7 +26,7 @@ export class AppController {
 
   // Delete a specific event by ID
   @Delete('event/:id')
-  deleteEvent(@Param('id') id: number): Events[] {
+  deleteEvent(@Param('id') id: string): Events[] {
     return this.appService.deleteEvent(id);
   }
 

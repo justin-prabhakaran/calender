@@ -10,7 +10,7 @@ export class AppService {
     return this.events;
   }
 
-  getEvent(id: number): Events {
+  getEvent(id: string): Events {
     const event = this.events.find((e) => e.id === id);
     if (event) {
       return event;
@@ -19,14 +19,13 @@ export class AppService {
   }
 
   saveEvent(event: Events) {
-    this.events.push(event); // Now this will work since events is initialized
+    this.events.push(event);
     return this.events;
   }
 
   updateEvent(event: Events) {
     const existingEvent = this.getEvent(event.id); // Reuse the getEvent method to find the event
 
-    // Update the event details
     existingEvent.title = event.title;
     existingEvent.date = event.date;
     existingEvent.description = event.description;
@@ -34,7 +33,7 @@ export class AppService {
     return this.events;
   }
 
-  deleteEvent(id: number) {
+  deleteEvent(id: string) {
     const index = this.events.findIndex((e) => e.id === id);
     if (index === -1) {
       throw new NotFoundException('Event not found');

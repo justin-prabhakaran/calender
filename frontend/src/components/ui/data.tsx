@@ -1,29 +1,20 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card.tsx";
 import { EllipsisVertical } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover.tsx";
-import {CustomDialog} from "@/components/ui/custom_dialog.tsx";
-// import { CustomDialog } from "@/components/ui/custom_dialog.tsx";
+import {Events} from "@/controller/controller.ts";
 
-export type DataProps = {
-    title: string;
-    description: string;
-    date: string | Date;
-}
-
-export function Data({ data, editButton }: { data: DataProps, editButton : React.ReactNode }) {
+export function Data({ event, editButton, onDelete }: { event: Events, editButton : React.ReactNode, onDelete : (event : Events)=>void }) {
 
 
-    // Convert data.date to a Date object if it's a string
-    const dateObj = new Date(data.date);
+    const dateObj = new Date(event.date);
 
-    // Check if the date is valid
     const formattedDate = !isNaN(dateObj.getTime()) ? dateObj.toDateString() : "Invalid Date";
 
     return (
         <Card>
             <CardHeader>
                 <div className={"flex flex-row justify-between"}>
-                    <CardTitle>{data.title}</CardTitle>
+                    <CardTitle className={"overflow-hidden"}>{event.title}</CardTitle>
 
                     <Popover>
                         <PopoverTrigger asChild>
@@ -33,14 +24,16 @@ export function Data({ data, editButton }: { data: DataProps, editButton : React
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-3 flex flex-col justify-evenly items-start">
                             {editButton}
-                            <button>delete</button>
+                            <button onClick={()=>{
+                                onDelete(event)
+                            }}>delete</button>
                         </PopoverContent>
                     </Popover>
                 </div>
                 <CardDescription>{formattedDate}</CardDescription> {/* Display formatted date */}
             </CardHeader>
             <CardContent>
-                <CardDescription>{data.description}</CardDescription>
+                <CardDescription className={"overflow-hidden"}>{event.description}</CardDescription>
             </CardContent>
         </Card>
     );
