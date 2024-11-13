@@ -14,7 +14,7 @@ export type CustomDialogProps = {
     button: React.ReactNode;
     title: string;
     description: string;
-    onSave: (id : string, title: string, description: string, date: Date) => void;
+    onSave: (id : string, title: string, description: string, date: Date) => Promise<void>;
 };
 
 export type CustomData = {
