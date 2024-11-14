@@ -85,7 +85,7 @@ function App() {
         try {
             const updatedEvent: Events = { id: id, title, description, date };
             const updatedEvents = await controller.updateEvent(updatedEvent); // Update event
-            setEvents(updatedEvents); // Update state with the new events list
+            setEvents(updatedEvents);
         } catch (error) {
             console.error("Error updating event:", error);
         }
@@ -122,13 +122,7 @@ function App() {
     return (
         <>
             <Nav onSearch={handleSearch} />
-            <Button onClick={() => {
-                toast('Times Up!!',{
-                    description: "test"
-                })
-            }}>
-                Trigger Test Toast
-            </Button>
+
             <Toaster  />
             <Separator className="mt-[30px]" />
             <div className="flex flex-row">

@@ -68,7 +68,7 @@ export class SocketGateway implements OnModuleInit, OnModuleDestroy {
             ) {
                 this.logger.log(`Emitting event: ${event.title}`);
                 this.server.emit('eventTriggered', event);
-                this.appService.deleteEvent(event.id);
+                // this.appService.deleteEvent(event.id);
             }
         });
     }
