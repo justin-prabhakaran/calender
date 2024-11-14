@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import React, { useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar.tsx";
 import { Events } from "@/controller/controller.ts";
+import {DateTimePicker} from "@/components/ui/date_time_picker.tsx";
 
 export type CustomDialogProps = {
     button: React.ReactNode;
@@ -75,20 +76,23 @@ export function CustomDialog({ props, data }: { props: CustomDialogProps; data: 
                         />
                     </div>
                     <div className="grid grid-cols-1 items-center">
-                        <Popover>
-                            <PopoverTrigger asChild>
-                                <Button
-                                    variant={"outline"}
-                                    className={cn("mt-4 w-[280px] justify-self-center text-left font-normal", !date && "text-muted-foreground")}
-                                >
-                                    <CalendarIcon />
-                                    {date ? format(date, "PPP") : <span>Pick a date</span>}
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0">
-                                <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
-                            </PopoverContent>
-                        </Popover>
+                        {/*<Popover>*/}
+                        {/*    <PopoverTrigger asChild>*/}
+                        {/*        <Button*/}
+                        {/*            variant={"outline"}*/}
+                        {/*            className={cn("mt-4 w-[280px] justify-self-center text-left font-normal", !date && "text-muted-foreground")}*/}
+                        {/*        >*/}
+                        {/*            <CalendarIcon />*/}
+                        {/*            {date ? format(date, "PPP") : <span>Pick a date</span>}*/}
+                        {/*        </Button>*/}
+                        {/*    </PopoverTrigger>*/}
+                        {/*    <PopoverContent className="w-auto p-0">*/}
+                        {/*        /!*<Calendar mode="single" selected={date} onSelect={setDate} initialFocus />*!/*/}
+                        {/*        */}
+                        {/*    </PopoverContent>*/}
+                        {/*</Popover>*/}
+
+                        <DateTimePicker value={date} onChange={setDate}/>
                     </div>
                 </div>
                 <DialogFooter>
