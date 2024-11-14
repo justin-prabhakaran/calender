@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input.tsx";
-import { Button } from "@/components/ui/button.tsx";
+// import { Button } from "@/components/ui/button.tsx";
 
 export function Nav({ onSearch }: { onSearch: (query: string) => void }) {
     const handleSearch = () => {
@@ -14,12 +14,16 @@ export function Nav({ onSearch }: { onSearch: (query: string) => void }) {
             </h1>
             <div className={"flex flex-row justify-between"}>
                 <Input
+                    placeholder={"Search ...."}
+                    onChange={()=>{
+                        handleSearch();
+                    }}
                     id="searchInput"
                     style={{
                         width: "30vw"
                     }}
                 />
-                <Button onClick={handleSearch}>Search</Button>
+                {/*<Button onClick={handleSearch}>Search</Button>*/}
             </div>
         </div>
     );
