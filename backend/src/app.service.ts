@@ -1,44 +1,58 @@
+// app.service.ts
+
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Events } from './model/events';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AppService {
-  // Initialize the events array to avoid undefined errors
-  private events: Events[] = [];
+  private eventsList: Events[] = [];
+
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
   getAllEvents(): Events[] {
-    return this.events;
+    return this.eventsList;
   }
 
-  getEvent(id: string): Events {
-    const event = this.events.find((e) => e.id === id);
-    if (event) {
-      return event;
-    }
-    throw new NotFoundException('Event not found');
+  saveEvent(event: Events): Events[] {
+    this.eventsList.push(event);
+    this.eventEmitter.emit('eventsUpdated', this.eventsList); // Emit an event after saving
+    return this.eventsList;
   }
 
-  saveEvent(event: Events) {
-    this.events.push(event);
-    return this.events;
-  }
-
-  updateEvent(event: Events) {
-    const existingEvent = this.getEvent(event.id); // Reuse the getEvent method to find the event
+  updateEvent(event: Events): Events[] {
+    const existingEvent = this.getEvent(event.id);
 
     existingEvent.title = event.title;
     existingEvent.date = event.date;
     existingEvent.description = event.description;
 
-    return this.events;
+    this.eventEmitter.emit('eventsUpdated', this.eventsList); // Emit an event after updating
+    return this.eventsList;
   }
 
-  deleteEvent(id: string) {
-    const index = this.events.findIndex((e) => e.id === id);
+  snoozeEvent(id: string, minutes: number): Events[] {
+    const event = this.getEvent(id);
+    event.date = new Date(event.date.getTime() + minutes * 60000); // Snooze the event by X minutes
+    this.eventEmitter.emit('eventsUpdated', this.eventsList); // Emit an event after snoozing
+    return this.eventsList;
+  }
+
+  getEvent(id: string): Events {
+    const event = this.eventsList.find((e) => e.id === id);
+    if (!event) {
+      throw new NotFoundException('Event not found');
+    }
+    return event;
+  }
+
+  deleteEvent(id: string): Events[] {
+    const index = this.eventsList.findIndex((e) => e.id === id);
     if (index === -1) {
       throw new NotFoundException('Event not found');
     }
-    this.events.splice(index, 1);
-    return this.events;
+    this.eventsList.splice(index, 1);
+    this.eventEmitter.emit('eventsUpdated', this.eventsList); // Emit an event after deletion
+    return this.eventsList;
   }
 }

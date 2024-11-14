@@ -5,7 +5,13 @@ import { Separator } from "@/components/ui/separator.tsx";
 import { Data } from "@/components/ui/data.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { CustomDialog } from "@/components/ui/custom_dialog.tsx";
-import { Controller, Events } from "@/controller/controller.ts"; // Import Controller
+import { Controller, Events } from "@/controller/controller.ts";
+import {io} from "socket.io-client"
+import {toast} from "sonner";
+import {Toaster} from "@/components/ui/sonner.tsx";
+
+
+
 
 function App() {
     const [events, setEvents] = useState<Events[]>([]); // State for events
@@ -89,9 +95,41 @@ function App() {
         setSearchQuery(query);
     };
 
+    useEffect(() => {
+        const socket = io("http://localhost:3003");
+
+        socket.on('eventTriggered',(event : Events) =>{
+            console.log("Recieved notif : " + event.title);
+            // toast({
+            //     title : "Times Up !!!!",
+            //     description : event.title,
+            //     action : (
+            //         <ToastAction altText={"Snooze"}>Snooze</ToastAction>
+            //     )
+            // })
+
+            toast('Times Up!!',{
+                description: event.title + "is Started !!"
+            })
+        });
+
+
+        return ()=>{
+            socket.close();
+        }
+    }, []);
+
     return (
         <>
             <Nav onSearch={handleSearch} />
+            <Button onClick={() => {
+                toast('Times Up!!',{
+                    description: "test"
+                })
+            }}>
+                Trigger Test Toast
+            </Button>
+            <Toaster  />
             <Separator className="mt-[30px]" />
             <div className="flex flex-row">
                 <div className="flex flex-col mx-5 my-5 items-center">
@@ -144,6 +182,8 @@ function App() {
                     </div>
                 </div>
             </div>
+
+
         </>
     );
 }

@@ -6,7 +6,7 @@ import { Events } from './model/events';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // Get a specific event by ID
+
   @Get('event/:id')
   getEvent(@Param('id') id: string): Events {
     return this.appService.getEvent(id);
